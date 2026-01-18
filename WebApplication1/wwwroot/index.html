@@ -1,0 +1,46 @@
+﻿<button onclick="getLocation()">Allow Location</button>
+
+<form id="addressForm">
+    <input placeholder="House No" id="houseNo" />
+    <input placeholder="Street" id="street" />
+    <input placeholder="Area" id="area" />
+    <input placeholder="City" id="city" />
+    <input placeholder="State" id="state" />
+    <input placeholder="Pincode" id="pincode" />
+    <button type="submit">Save</button>
+</form>
+
+<script>
+let lat = 0, lng = 0;
+
+function getLocation() {
+  navigator.geolocation.getCurrentPosition(pos => {
+    lat = pos.coords.latitude;
+    lng = pos.coords.longitude;
+    alert("Location captured");
+  });
+}
+
+document.getElementById("addressForm").addEventListener("submit", async e => {
+  e.preventDefault();
+
+  const data = {
+    houseNo: houseNo.value,
+    street: street.value,
+    area: area.value,
+    city: city.value,
+    state: state.value,
+    pincode: pincode.value,
+    latitude: lat,
+    longitude: lng
+  };
+
+  await fetch("/api/address/save", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  });
+
+  alert("Address Saved");
+});
+</script>

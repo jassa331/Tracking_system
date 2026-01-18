@@ -1,0 +1,13 @@
+﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using WebApplication1.Models;
+
+public class AppDbContext : DbContext
+{
+    public AppDbContext(DbContextOptions<AppDbContext> options)
+        : base(options) { }
+
+    public DbSet<PatientAddress> PatientAddresses { get; set; }
+    public DbSet<ApiLog>ApiLogs { get; set; }
+
+}

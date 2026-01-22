@@ -1,0 +1,20 @@
+name: Push to Bitbucket
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  push-to-bitbucket:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Push to Bitbucket
+        run: |
+          git remote add bitbucket https://$BITBUCKET_USERNAME:$BITBUCKET_APP_PASSWORD@bitbucket.org/<bitbucket-username>/<repo>.git
+          git push bitbucket main --force
+        env:
+          BITBUCKET_USERNAME: ${{ secrets.BITBUCKET_USERNAME }}
+          BITBUCKET_APP_PASSWORD: ${{ secrets.BITBUCKET_APP_PASSWORD }}
